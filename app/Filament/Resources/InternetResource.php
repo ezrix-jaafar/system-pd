@@ -19,6 +19,8 @@ class InternetResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Bills';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -45,14 +47,14 @@ class InternetResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -60,5 +62,5 @@ class InternetResource extends Resource
             'create' => Pages\CreateInternet::route('/create'),
             'edit' => Pages\EditInternet::route('/{record}/edit'),
         ];
-    }    
+    }
 }
