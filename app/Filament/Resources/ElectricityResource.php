@@ -24,6 +24,7 @@ class ElectricityResource extends Resource
 
     protected static ?string $navigationGroup = 'Bills';
 
+
     public static function form(Form $form): Form
     {
         return $form
@@ -110,12 +111,6 @@ class ElectricityResource extends Resource
 
 
                     ]),
-
-
-
-
-
-
 
             ]);
 

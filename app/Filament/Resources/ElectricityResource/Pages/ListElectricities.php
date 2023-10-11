@@ -10,6 +10,8 @@ class ListElectricities extends ListRecords
 {
     protected static string $resource = ElectricityResource::class;
 
+    protected static ?string $title = 'Electricity Bills';
+
     protected function getHeaderActions(): array
     {
         return [
