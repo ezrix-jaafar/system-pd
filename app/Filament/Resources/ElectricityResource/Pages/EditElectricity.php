@@ -9,6 +9,7 @@ use Filament\Resources\Pages\EditRecord;
 class EditElectricity extends EditRecord
 {
     protected static string $resource = ElectricityResource::class;
+    protected static ?string $title = 'Edit Bill';
 
     protected function getHeaderActions(): array
     {
