@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+
 use App\Filament\Resources\InternetResource\Pages;
 use App\Filament\Resources\InternetResource\RelationManagers;
 use App\Models\Internet;
@@ -19,13 +20,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Enums\MonthEnum; // Import MonthEnum
 use App\Enums\YearEnum; // Import YearEnum
 
+
 class InternetResource extends Resource
 {
     protected static ?string $model = Internet::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-
-    protected static ?string $navigationGroup = 'Bills';
 
     protected static ?string $navigationGroup = 'Bills';
 

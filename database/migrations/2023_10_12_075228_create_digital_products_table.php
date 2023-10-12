@@ -13,10 +13,20 @@ return new class extends Migration
     {
         Schema::create('digital_products', function (Blueprint $table) {
             $table->id();
+
+            $table->string('product_name');
+
+            $table->longText('product_description');
+
+            $table->string('file_location');
+
+            $table->string('sales_page');
+
+            $table->json('variations');
+
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
