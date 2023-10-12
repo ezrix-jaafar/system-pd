@@ -9,4 +9,6 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateElectricity extends CreateRecord
 {
     protected static string $resource = ElectricityResource::class;
+    protected static ?string $title = 'Add New Bill';
+
 }

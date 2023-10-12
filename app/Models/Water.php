@@ -12,6 +12,7 @@ class Water extends Model
 
     protected $fillable = [
         'month',
+        'year',
         'amount',
         'bill_image',
         'payment_status',
