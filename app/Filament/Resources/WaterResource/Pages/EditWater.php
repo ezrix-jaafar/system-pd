@@ -9,6 +9,7 @@ use Filament\Resources\Pages\EditRecord;
 class EditWater extends EditRecord
 {
     protected static string $resource = WaterResource::class;
+    protected static ?string $title = 'Edit Bill';
 
     protected function getHeaderActions(): array
     {

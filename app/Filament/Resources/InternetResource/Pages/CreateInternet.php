@@ -9,4 +9,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateInternet extends CreateRecord
 {
     protected static string $resource = InternetResource::class;
+    protected static ?string $title = 'Add New Bill';
 }

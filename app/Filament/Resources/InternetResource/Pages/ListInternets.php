@@ -10,10 +10,13 @@ class ListInternets extends ListRecords
 {
     protected static string $resource = InternetResource::class;
 
+    protected static ?string $title = 'Internet Bills';
+
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Add new bill'),
         ];
     }
 }

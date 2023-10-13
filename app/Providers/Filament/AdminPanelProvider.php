@@ -27,7 +27,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path('')
             ->plugin(FilamentAccessControlPlugin::make())
             ->colors([
                 'primary' => Color::Blue,
@@ -60,10 +60,10 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->login()
-        ->registration()
-        ->passwordReset()
-        ->emailVerification()
-        ->profile()
+            ->registration()
+            ->passwordReset()
+            ->emailVerification()
+            ->profile()
             ->authMiddleware([
                 Authenticate::class,
             ]);

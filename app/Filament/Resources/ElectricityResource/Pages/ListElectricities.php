@@ -16,6 +16,7 @@ class ListElectricities extends ListRecords
     {
         return [
             Actions\CreateAction::make()
+                ->label('Add new bill'),
         ];
     }
 }

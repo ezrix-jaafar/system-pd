@@ -9,11 +9,13 @@ use Filament\Resources\Pages\ListRecords;
 class ListWaters extends ListRecords
 {
     protected static string $resource = WaterResource::class;
+    protected static ?string $title = 'Water Bills';
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Add new bill'),
         ];
     }
 }

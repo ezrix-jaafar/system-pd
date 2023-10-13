@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-
 use App\Filament\Resources\InternetResource\Pages;
 use App\Filament\Resources\InternetResource\RelationManagers;
 use App\Models\Internet;
@@ -10,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Enums\MonthEnum; // Import MonthEnum
 use App\Enums\YearEnum; // Import YearEnum
-
+use Filament\Tables\Filters\SelectFilter;
 
 class InternetResource extends Resource
 {
@@ -56,17 +56,37 @@ class InternetResource extends Resource
                         'October' => 'October',
                         'November' => 'November',
                         'December' => 'December',
-                    ]),
+                    ])
+                        ->required(),
 
-                    Forms\Components\TextInput::make('amount'),
+                        Forms\Components\Select::make('year')
+                        ->options([
+                            '2022' => '2022',
+                            '2023' => '2023',
+                            '2024' => '2024',
+                            '2025' => '2025',
+                            '2026' => '2026',
+                            '2027' => '2027',
+                            '2028' => '2028',
+                            '2029' => '2029',
+                            '2030' => '2030',
+                            '2031' => '2031',
+                            '2032' => '2032',
+                            '2033' => '2033',
+                            '2034' => '2034',
+                            '2035' => '2035',
+                        ])
+                        ->required(),
+
+                        Forms\Components\TextInput::make('amount')
+                        ->required(),
 
                     Forms\Components\Select::make('payment_status')
                     ->options([
                         'unpaid' => 'Unpaid',
                         'partial' => 'Partial',
                         'paid' => 'Paid',
-                    ])
-                    ->columnSpan('full'),
+                    ]),
 
                     Forms\Components\FileUpload::make('bill_image')
                     ->image()
@@ -87,8 +107,6 @@ class InternetResource extends Resource
 
             ->schema([
 
-
-
                 Forms\Components\Section::make('Payment Details')
 
                 ->schema([
@@ -103,9 +121,6 @@ class InternetResource extends Resource
 
 
                 ]),
-
-
-
 
             ]),
 
@@ -127,10 +142,30 @@ class InternetResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('month')
+                    ->searchable(),
+                TextColumn::make('year'),
+                TextColumn::make('amount')
+                    ->money('MYR'),
+                TextColumn::make('payment_status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'unpaid' => 'danger',
+                        'paid' => 'success',
+                        'partial' => 'warning',
+                    }),
+                TextColumn::make('paid_amount')
+                    ->money('MYR')
+                    ->placeholder('MYR 0.00'),
             ])
             ->filters([
-                //
+                SelectFilter::make('payment_status')
+                    ->multiple()
+                    ->options([
+                        'unpaind' => 'unpaid',
+                        'partial' => 'partial',
+                        'paid' => 'paid',
+                ])
             ])
             ->actions([
                 ActionGroup::make([

@@ -10,6 +10,8 @@ class EditInternet extends EditRecord
 {
     protected static string $resource = InternetResource::class;
 
+    protected static ?string $title = 'Edit Bills';
+
     protected function getHeaderActions(): array
     {
         return [

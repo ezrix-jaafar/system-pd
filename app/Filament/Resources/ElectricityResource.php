@@ -112,8 +112,6 @@ class ElectricityResource extends Resource
 
                 ->schema([
 
-
-
                     Forms\Components\Section::make('Payment Details')
 
                     ->schema([
@@ -128,9 +126,6 @@ class ElectricityResource extends Resource
 
 
                     ]),
-
-
-
 
                 ]),
 
@@ -160,9 +155,9 @@ class ElectricityResource extends Resource
                 TextColumn::make('payment_status')
                 ->badge()
                 ->color(fn (string $state): string => match ($state) {
-                    'unpaid' => 'warning',
+                    'unpaid' => 'danger',
                     'paid' => 'success',
-                    'partial' => 'danger',
+                    'partial' => 'warning',
                 }),
                 TextColumn::make('paid_amount')
                 ->money('MYR')
