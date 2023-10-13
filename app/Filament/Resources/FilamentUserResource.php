@@ -23,8 +23,6 @@ class FilamentUserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $title = 'Staff';
-
     protected static ?string $navigationLabel = 'Staff';
 
     public static function form(Form $form): Form

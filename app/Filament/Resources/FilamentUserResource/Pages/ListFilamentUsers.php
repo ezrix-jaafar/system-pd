@@ -10,6 +10,8 @@ class ListFilamentUsers extends ListRecords
 {
     protected static string $resource = FilamentUserResource::class;
 
+    protected static ?string $title = 'Staff';
+
     protected function getHeaderActions(): array
     {
         return [
