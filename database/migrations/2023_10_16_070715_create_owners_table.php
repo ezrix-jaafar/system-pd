@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->date('received_date');
             $table->date('return_date')->nullable();
-            $table->string('acceptance_letter');
+            $table->string('acceptance_letter')->nullable();
+            $table->string('availability')->default('Not Available');
             $table->longText('note')
                 ->nullable();
             $table->timestamps();
@@ -37,6 +38,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('owners');
-        Schema::dropIfExists('owners_asset');
+        Schema::dropIfExists('asset_owner');
     }
 };

@@ -20,8 +20,8 @@ class Asset extends Model
         'purchase_date',
         'purchase_receipt',
         'warranty_expired',
-        'is_available',
-        'is_working',
+        'availability',
+        'condition',
         'notes',
     ];
 
@@ -34,6 +34,5 @@ class Asset extends Model
     {
         return $this->belongsToMany(Owner::class);
     }
-
 
 }

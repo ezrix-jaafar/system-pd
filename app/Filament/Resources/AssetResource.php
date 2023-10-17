@@ -5,21 +5,27 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AssetResource\Pages;
 use App\Filament\Resources\AssetResource\RelationManagers;
 use App\Models\Asset;
-use Faker\Provider\Text;
+use App\Models\Owner;
 use Filament\Forms;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Closure;
+
 
 class AssetResource extends Resource
 {
@@ -51,15 +57,16 @@ class AssetResource extends Resource
                                 TextInput::make('brand'),
                                 TextInput::make('model'),
                                 TextInput::make('serial_number'),
-                                TextInput::make('ram'),
-                                TextInput::make('storage'),
+                                TextInput::make('ram')
+                                ->suffix('GB'),
+                                TextInput::make('storage')
+                                ->suffix('GB'),
                                 Forms\Components\DatePicker::make('purchase_date'),
                                 Forms\Components\DatePicker::make('warranty_expired'),
-                                Forms\Components\FileUpload::make('purchase_receipt')
-                                    ->image()
-                                    ->imageEditor()
-                                    ->openable()
-                                    ->columnSpan('full'),
+
+                                Forms\Components\Textarea::make('notes')
+                                ->columnSpan('full')
+                                ->rows('6'),
 
                             ])->columns(2),
 
@@ -73,15 +80,25 @@ class AssetResource extends Resource
                         Forms\Components\Section::make('Status')
 
                             ->schema([
-                                Toggle::make('is_available')
-                                    ->onColor('success')
-                                    ->offColor('danger'),
 
-                                Toggle::make('is_working')
-                                    ->onColor('success')
-                                    ->offColor('danger'),
+                                Forms\Components\Select::make('condition')
+                                    ->options([
 
-                                Forms\Components\Textarea::make('notes')
+                                        'Working' => 'Working',
+                                        'Not Working' => 'Not Working',
+                                    ]),
+
+                            ]),
+                        Forms\Components\Section::make('Receipt Image')
+
+                            ->schema([
+
+                                Forms\Components\FileUpload::make('purchase_receipt')
+                                    ->image()
+                                    ->imageEditor()
+                                    ->openable()
+                                    ->downloadable()
+                                    ->columnSpan('full'),
                             ]),
 
                     ]),
@@ -104,14 +121,43 @@ class AssetResource extends Resource
                         'Laptop' => 'success',
                         'Desktop' => 'warning',
                     }),
-                Tables\Columns\IconColumn::make('is_available')
-                    ->boolean(),
-                Tables\Columns\IconColumn::make('is_working')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('owner.name')
+                    ->getStateUsing(function (Model $record) {
+                        $latestOwner = $record->owner()->latest()->first();
+
+                        if ($latestOwner && $latestOwner->return_date !== null) {
+                            return '-'; // Return an empty string if the latest owner has a return_date
+                        }
+
+                        return $latestOwner ? $latestOwner->name : ''; // Return the owner's name if available
+                    }),
+                Tables\Columns\IconColumn::make('owner.availability')
+
+                    ->icon(fn (string $state): string => match ($state) {
+                        'Not Available' => 'heroicon-o-x-circle',
+                        'Available' => 'heroicon-o-check-circle',
+                    })
+                    ->colors([
+                        'danger' => 'Not Available',
+                        'success' => 'Available',
+                    ]),
+                Tables\Columns\IconColumn::make('condition')
+                    ->icon(fn (string $state): string => match ($state) {
+                        'Not Working' => 'heroicon-o-x-circle',
+                        'Working' => 'heroicon-o-check-circle',
+                    })
+                    ->colors([
+                        'danger' => 'Not Working',
+                        'success' => 'Working',
+                    ]),
 
             ])
             ->filters([
-                //
+                SelectFilter::make('availability')
+                    ->options([
+                        'Available' => 'Available',
+                        'Not Available' => 'Not Available',
+                    ])
             ])
             ->actions([
                 ActionGroup::make([
@@ -142,4 +188,6 @@ class AssetResource extends Resource
             'edit' => Pages\EditAsset::route('/{record}/edit'),
         ];
     }
+
+
 }

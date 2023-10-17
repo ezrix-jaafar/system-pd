@@ -24,8 +24,10 @@ return new class extends Migration
             $table->date('purchase_date');
             $table->string('purchase_receipt')->nullable();
             $table->date('warranty_expired');
-            $table->boolean('is_available')->default(true);
-            $table->boolean('is_working')->default(true);
+            $table->string('availability')->default('Available');
+            $table->enum('condition', [
+                'Working', 'Not Working'
+            ]);
             $table->longText('notes')->nullable();
             $table->timestamps();
         });
