@@ -19,7 +19,9 @@ return new class extends Migration
             $table->date('received_date');
             $table->date('return_date')->nullable();
             $table->string('acceptance_letter')->nullable();
-            $table->string('availability')->default('Not Available');
+            $table->enum('availability', [
+                'Available', 'Not Available'
+            ])->default('Not Available');
             $table->longText('note')
                 ->nullable();
             $table->timestamps();

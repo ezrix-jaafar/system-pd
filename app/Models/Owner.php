@@ -20,7 +20,19 @@ class Owner extends Model
 
     public function asset(): BelongsToMany
     {
-        return $this->belongsToMany(Asset::class);
+        return $this->hasMany(Asset::class);
+    }
+
+    public function setReturnDateAttribute($value)
+    {
+        $this->attributes['return_date'] = $value;
+
+        // Update the availability field based on the return_date value
+        if (!empty($value)) {
+            $this->attributes['availability'] = 'Available';
+        } else {
+            $this->attributes['availability'] = 'Not Available';
+        }
     }
 
     public function create(array $attributes = [])

@@ -24,7 +24,6 @@ return new class extends Migration
             $table->date('purchase_date');
             $table->string('purchase_receipt')->nullable();
             $table->date('warranty_expired');
-            $table->string('availability')->default('Available');
             $table->enum('condition', [
                 'Working', 'Not Working'
             ]);

@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Closure;
+use Filament\Forms\Get;
 
 class OwnerRelationManager extends RelationManager
 {
@@ -30,12 +31,18 @@ class OwnerRelationManager extends RelationManager
 //                    ->required()
 //                    ->maxLength(255),
 
-                Forms\Components\TextInput::make('name')
-                ->columnSpan('full'),
+                Forms\Components\TextInput::make('name'),
+                Forms\Components\Select::make('availability')
+                    ->options([
+                        'Available' => 'Available',
+                        'Not Available' => 'Not Available',
+                    ])
+                    ->disabled(),
                 Forms\Components\DatePicker::make('received_date'),
                 Forms\Components\DatePicker::make('return_date')
-                ->reactive(),
-                TextInput::make('availability'),
+                ->reactive()
+                ->live(onBlur: true),
+//                ->afterStateUpdated(fn (Get $get) => $get('availability') !== 'Not Available'),
                 Forms\Components\Textarea::make('note'),
                 Forms\Components\FileUpload::make('acceptance_letter')
                 ->image()
@@ -77,7 +84,7 @@ class OwnerRelationManager extends RelationManager
     public function create($data)
     {
         $owner = new Owner();
-        $owner->store($data);
+        $owner->create($data);
     }
 
     public function update($record, $data)

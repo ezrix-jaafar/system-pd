@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Closure;
 
 
+
 class AssetResource extends Resource
 {
     protected static ?string $model = Asset::class;
@@ -80,7 +81,6 @@ class AssetResource extends Resource
                         Forms\Components\Section::make('Status')
 
                             ->schema([
-
                                 Forms\Components\Select::make('condition')
                                     ->options([
 
@@ -130,8 +130,20 @@ class AssetResource extends Resource
                         }
 
                         return $latestOwner ? $latestOwner->name : ''; // Return the owner's name if available
-                    }),
+                    })->searchable(),
+
                 Tables\Columns\IconColumn::make('owner.availability')
+                    ->label('Availability')
+                        ->getStateUsing(function ($record) {
+                            $latestOwner = $record->owner()->latest()->first();
+
+                            if (!$latestOwner) {
+                                return 'Available'; // No owner record, so it's available.
+                            }
+
+                            return $latestOwner->availability;
+                        })
+
 
                     ->icon(fn (string $state): string => match ($state) {
                         'Not Available' => 'heroicon-o-x-circle',
@@ -153,12 +165,8 @@ class AssetResource extends Resource
 
             ])
             ->filters([
-                SelectFilter::make('availability')
-                    ->options([
-                        'Available' => 'Available',
-                        'Not Available' => 'Not Available',
-                    ])
-            ])
+                //
+        ])
             ->actions([
                 ActionGroup::make([
                     ViewAction::make(),
