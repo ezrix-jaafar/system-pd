@@ -20,7 +20,7 @@ class Owner extends Model
 
     public function asset(): BelongsToMany
     {
-        return $this->hasMany(Asset::class);
+        return $this->belongsToMany(Asset::class);
     }
 
     public function setReturnDateAttribute($value)

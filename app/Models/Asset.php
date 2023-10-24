@@ -34,5 +34,9 @@ class Asset extends Model
     {
         return $this->belongsToMany(Owner::class);
     }
+    public function repair(): BelongsToMany
+    {
+        return $this->belongsToMany(Repair::class);
+    }
 
 }
