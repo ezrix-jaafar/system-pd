@@ -184,9 +184,11 @@ class AssetResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\OwnerRelationManager::class
+            RelationManagers\OwnerRelationManager::class,
+            RelationManagers\RepairRelationManager::class,
         ];
     }
+
 
     public static function getPages(): array
     {
