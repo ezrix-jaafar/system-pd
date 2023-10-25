@@ -18,9 +18,14 @@ class RepairRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')
-                    ->required()
-                    ->maxLength(255),
+//                Forms\Components\TextInput::make('id')
+//                    ->required()
+//                    ->maxLength(255),
+                Forms\Components\TextInput::make('company')
+                    ->required(),
+                Forms\Components\DatePicker::make('send_date')
+                    ->required(),
+                
             ]);
     }
 
