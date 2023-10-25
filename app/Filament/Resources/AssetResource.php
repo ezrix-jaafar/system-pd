@@ -168,7 +168,9 @@ class AssetResource extends Resource
 
             ])
             ->filters([
-                //
+                SelectFilter::make('company')
+                    ->searchable()
+                    ->preload()
         ])
             ->actions([
                 ActionGroup::make([

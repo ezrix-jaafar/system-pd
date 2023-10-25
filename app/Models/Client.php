@@ -13,9 +13,14 @@ class Client extends Model
         'name',
         'email',
         'phone',
+        'company',
+        'designation',
+        'name_card',
         'address',
         'city',
         'state',
         'postcode',
+        'country',
+        'note',
     ];
 }
