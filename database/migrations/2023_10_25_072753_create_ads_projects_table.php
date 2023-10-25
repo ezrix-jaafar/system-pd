@@ -21,8 +21,8 @@ return new class extends Migration
                 'New', 'Active', 'On Hold', 'Ended', 'Renew Active', 'Renew On Hold', 'Renew Ended'
             ])->default('New'); // Project Status
             $table->string('project_link')->nullable(); // Project Link
-            $table->string('daily_budget')->nullable(); // Daily Budget
-            $table->string('total_spend')->nullable(); // Total spend
+            $table->decimal('daily_budget',10,2)->nullable(); // Daily Budget
+            $table->decimal('total_spend',10,2)->nullable(); // Total spend
             $table->date('start_date')->nullable(); // Start Date
             $table->date('end_date')->nullable(); // End Date
             $table->string('total_days')->nullable(); // Total Days
