@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -38,10 +39,24 @@ class AdminPanelProvider extends PanelProvider
             ->pages([
                 Pages\Dashboard::class,
             ])
+            ->sidebarFullyCollapsibleOnDesktop()
             ->navigationGroups([
-                'Bills',
-                'Products',
-                'Administration',
+                NavigationGroup::make()
+                    ->label('Assets Management')
+                    ->icon('heroicon-o-computer-desktop')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Bills Management')
+                    ->icon('heroicon-o-document-text')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Products')
+                    ->icon('heroicon-o-shopping-cart')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Administration')
+                    ->icon('heroicon-o-cog')
+                    ->collapsed(),
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([

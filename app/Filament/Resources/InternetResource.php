@@ -25,9 +25,9 @@ class InternetResource extends Resource
 {
     protected static ?string $model = Internet::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+//    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = 'Bills';
+    protected static ?string $navigationGroup = 'Bills Management';
 
     public static function form(Form $form): Form
     {
@@ -141,6 +141,7 @@ class InternetResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->striped()
             ->columns([
                 TextColumn::make('month')
                     ->searchable(),
@@ -162,7 +163,7 @@ class InternetResource extends Resource
                 SelectFilter::make('payment_status')
                     ->multiple()
                     ->options([
-                        'unpaind' => 'unpaid',
+                        'unpaid' => 'unpaid',
                         'partial' => 'partial',
                         'paid' => 'paid',
                 ])

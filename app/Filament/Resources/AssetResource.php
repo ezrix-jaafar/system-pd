@@ -32,7 +32,9 @@ class AssetResource extends Resource
 {
     protected static ?string $model = Asset::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+//    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
+    protected static ?string $navigationGroup = 'Assets Management';
+    protected static ?string $navigationLabel = 'Electronic Devices';
 
     public static function form(Form $form): Form
     {
@@ -108,6 +110,7 @@ class AssetResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->striped()
             ->columns([
                 Tables\Columns\TextColumn::make('brand'),
                 Tables\Columns\TextColumn::make('ram')

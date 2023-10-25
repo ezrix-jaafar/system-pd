@@ -29,9 +29,9 @@ class ElectricityResource extends Resource
 {
     protected static ?string $model = Electricity::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+//    protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = 'Bills';
+    protected static ?string $navigationGroup = 'Bills Management';
 
     public static function form(Form $form): Form
     {
@@ -146,6 +146,7 @@ class ElectricityResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->striped()
             ->columns([
                 TextColumn::make('month')
                     ->searchable(),
@@ -168,7 +169,7 @@ class ElectricityResource extends Resource
                 SelectFilter::make('payment_status')
                     ->multiple()
                     ->options([
-                        'unpaind' => 'unpaid',
+                        'unpaid' => 'unpaid',
                         'partial' => 'partial',
                         'paid' => 'paid',
                 ])

@@ -23,7 +23,7 @@ class MerchandiseResource extends Resource
 {
     protected static ?string $model = Merchandise::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
+//    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
     protected static ?string $navigationGroup = 'Products';
 
@@ -89,6 +89,7 @@ class MerchandiseResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->striped()
             ->columns([
                 TextColumn::make('product_name')
                     ->searchable(),
