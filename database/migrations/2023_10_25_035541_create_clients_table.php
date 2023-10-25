@@ -20,11 +20,11 @@ return new class extends Migration
             $table->string('designation')->nullable(); // Client Designation
             $table->longText('address')->nullable(); // Client Address
             $table->string('city')->nullable(); // Client City
-            $table->string('state')->valid([
+            $table->enum('state', [
                 'Johor', 'Kedah', 'Kelantan', 'Melaka', 'Negeri Sembilan',
                 'Pahang', 'Perak', 'Perlis', 'Pulau Pinang', 'Sabah', 'Sarawak', 'Selangor',
                 'Terengganu', 'Kuala Lumpur', 'Labuan', 'Putrajaya'
-            ]); // Client State
+            ]);// Client State
             $table->string('country')->default('Malaysia');
             $table->string('postcode')->nullable(); // Client Postcode
             $table->string('name_card')->nullable(); // Client Name Card
