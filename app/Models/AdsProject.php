@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Chiiya\FilamentAccessControl\Models\FilamentUser;
 
 class AdsProject extends Model
 {
@@ -21,6 +23,21 @@ class AdsProject extends Model
         'total_days',
         'project_description',
         'report_image',
+        'client_id',
+        'filament_user_id',
     ];
+
+    protected $casts = [
+        'report_image' => 'array',
+    ];
+
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class);
+    }
+    public function FilamentUser(): BelongsTo
+    {
+        return $this->belongsTo(FilamentUser::class);
+    }
 }
 
