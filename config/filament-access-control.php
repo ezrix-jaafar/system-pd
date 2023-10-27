@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\CustomFilamentUser;
 use Chiiya\FilamentAccessControl\Resources\FilamentUserResource;
 use Chiiya\FilamentAccessControl\Resources\RoleResource;
 use Chiiya\FilamentAccessControl\Resources\PermissionResource;

@@ -5,8 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AdsProjectResource\Pages;
 use App\Filament\Resources\AdsProjectResource\RelationManagers;
 use App\Models\AdsProject;
-use Chiiya\FilamentAccessControl\Models\FilamentUser;
-use Filament\Models\Contracts\FilamentUser as FilamentUserInterface;
+use App\Models\CustomFilamentUser;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -44,13 +43,6 @@ class AdsProjectResource extends Resource
                                     ->searchable()
                                     ->options(function () {
                                     return \App\Models\Client::all()->pluck('name', 'id');
-                                    })->columnSpan('full'),
-                                Forms\Components\Select::make('filament_user_id')
-                                    ->relationship('filament_user', 'name')
-                                    ->required()
-                                    ->searchable()
-                                    ->options(function () {
-                                    return FilamentUser::all()->pluck('first_name', 'id');
                                     })->columnSpan('full'),
                                 Forms\Components\Select::make('project_type')
                                     ->options([

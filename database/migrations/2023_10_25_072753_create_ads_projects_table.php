@@ -28,8 +28,6 @@ return new class extends Migration
             $table->string('total_days')->nullable(); // Total Days
             $table->longText('project_description')->nullable(); // Project Description
             $table->json('report_image')->nullable(); // Report Image
-            $table->unsignedBigInteger('filament_user_id');
-            $table->foreign('filament_user_id')->references('id')->on('filament_users');
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
