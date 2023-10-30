@@ -24,6 +24,8 @@ class AdsProject extends Model
         'project_description',
         'report_image',
         'client_id',
+        'person_in_charge_id',
+        'sales_person_id',
     ];
 
     protected $casts = [
@@ -34,5 +36,11 @@ class AdsProject extends Model
     {
         return $this->belongsTo(Client::class);
     }
+
+    public function staff(): BelongsTo
+    {
+        return $this->belongsTo(Staff::class);
+    }
+
 }
 

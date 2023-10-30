@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AdsProjectResource\Pages;
 use App\Filament\Resources\AdsProjectResource\RelationManagers;
 use App\Models\AdsProject;
-use App\Models\CustomFilamentUser;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -44,6 +43,22 @@ class AdsProjectResource extends Resource
                                     ->options(function () {
                                     return \App\Models\Client::all()->pluck('name', 'id');
                                     })->columnSpan('full'),
+//                                Forms\Components\Select::make('person_in_charge_id')
+//                                    ->relationship('staff', 'name')
+//                                    ->required()
+//                                    ->searchable()
+//                                    ->label('Person In Charge')
+//                                    ->options(function () {
+//                                    return \App\Models\Staff::all()->pluck('name', 'id');
+//                                    }),
+                                Forms\Components\Select::make('sales_person_id')
+                                    ->relationship('staff', 'name')
+                                    ->required()
+                                    ->searchable()
+                                    ->label('Sales Person')
+                                    ->options(function () {
+                                    return \App\Models\Staff::all()->pluck('name', 'id');
+                                    }),
                                 Forms\Components\Select::make('project_type')
                                     ->options([
                                         'Google Ads' => 'Google Ads',
@@ -168,10 +183,12 @@ class AdsProjectResource extends Resource
                         'Renew On Hold' => 'primary',
                         'Renew Ended' => 'secondary',
                     }),
-                Tables\Columns\TextColumn::make('start_date')
+                Tables\Columns\TextColumn::make('sales_person.name')
+                    ->label('Sales Person')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('end_date')
+                Tables\Columns\TextColumn::make('person_in_charge.name')
+                    ->label('Person In Charge')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_spend')
