@@ -51,7 +51,7 @@ class AdsProjectResource extends Resource
 //                                    ->options(function () {
 //                                    return \App\Models\Staff::all()->pluck('name', 'id');
 //                                    }),
-                                Forms\Components\Select::make('sales_person_id')
+                                Forms\Components\Select::make('staff_id')
                                     ->relationship('staff', 'name')
                                     ->required()
                                     ->searchable()
@@ -183,12 +183,8 @@ class AdsProjectResource extends Resource
                         'Renew On Hold' => 'primary',
                         'Renew Ended' => 'secondary',
                     }),
-                Tables\Columns\TextColumn::make('sales_person.name')
+                Tables\Columns\TextColumn::make('staff.name')
                     ->label('Sales Person')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('person_in_charge.name')
-                    ->label('Person In Charge')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_spend')

@@ -30,10 +30,8 @@ return new class extends Migration
             $table->json('report_image')->nullable(); // Report Image
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
-            $table->unsignedBigInteger('person_in_charge_id')->nullable(); // Person in Charge
-            $table->foreign('person_in_charge_id')->references('id')->on('staff');
-            $table->unsignedBigInteger('sales_person_id')->nullable(); // Sales Person
-            $table->foreign('sales_person_id')->references('id')->on('staff');
+            $table->unsignedBigInteger('staff_id')->nullable();
+            $table->foreign('staff_id')->references('id')->on('staff');
             $table->timestamps();
         });
     }
