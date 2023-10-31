@@ -18,9 +18,20 @@ class AssetHolderRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id')
+                Forms\Components\Select::make('staff_id')
+                    ->relationship('staff', 'name')
                     ->required()
-                    ->maxLength(255),
+                    ->searchable()
+                    ->options(function () {
+                        return \App\Models\Staff::all()->pluck('name', 'id');
+                    })->columnSpan('full'),
+                Forms\Components\DatePicker::make('received_date'),
+                Forms\Components\DatePicker::make('return_date'),
+                Forms\Components\Textarea::make('note'),
+                Forms\Components\FileUpload::make('acceptance_letter')
+                    ->image()
+                    ->openable()
+                    ->downloadable(),
             ]);
     }
 
