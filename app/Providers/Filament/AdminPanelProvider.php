@@ -50,11 +50,19 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-document-text')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label('Clients')
+                    ->label('Projects Management')
+                    ->icon('heroicon-o-briefcase')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Clients Management')
                     ->icon('heroicon-o-user')
                     ->collapsed(),
                 NavigationGroup::make()
-                    ->label('Products')
+                    ->label('Staff Management')
+                    ->icon('heroicon-o-users')
+                    ->collapsed(),
+                NavigationGroup::make()
+                    ->label('Products Management')
                     ->icon('heroicon-o-shopping-cart')
                     ->collapsed(),
                 NavigationGroup::make()

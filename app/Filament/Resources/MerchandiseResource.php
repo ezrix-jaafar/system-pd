@@ -25,7 +25,7 @@ class MerchandiseResource extends Resource
 
 //    protected static ?string $navigationIcon = 'heroicon-o-shopping-bag';
 
-    protected static ?string $navigationGroup = 'Products';
+    protected static ?string $navigationGroup = 'Products Management';
 
     public static function form(Form $form): Form
     {

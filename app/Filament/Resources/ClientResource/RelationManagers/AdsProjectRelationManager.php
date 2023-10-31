@@ -1,31 +1,24 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\ClientResource\RelationManagers;
 
-use App\Filament\Resources\AdsProjectResource\Pages;
-use App\Filament\Resources\AdsProjectResource\RelationManagers;
-use App\Models\AdsProject;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class AdsProjectResource extends Resource
+class AdsProjectRelationManager extends RelationManager
 {
-    protected static ?string $model = AdsProject::class;
+    protected static string $relationship = 'AdsProject';
 
-//    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Projects Management';
-    protected static ?string $navigationLabel = 'Ads Projects';
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -38,20 +31,13 @@ class AdsProjectResource extends Resource
                                     ->required()
                                     ->placeholder(__('Project Name'))
                                     ->columnSpan('full'),
-                                Forms\Components\Select::make('client_id')
-                                    ->relationship('client', 'name')
-                                    ->required()
-                                    ->searchable()
-                                    ->options(function () {
-                                    return \App\Models\Client::all()->pluck('name', 'id');
-                                    })->columnSpan('full'),
                                 Forms\Components\Select::make('person_in_charge_id')
                                     ->relationship('personInCharge')
                                     ->required()
                                     ->searchable()
                                     ->label('Person In Charge')
                                     ->options(function () {
-                                    return \App\Models\Staff::all()->pluck('name', 'id');
+                                        return \App\Models\Staff::all()->pluck('name', 'id');
                                     }),
                                 Forms\Components\Select::make('salesperson_id')
                                     ->relationship('salesperson')
@@ -59,7 +45,7 @@ class AdsProjectResource extends Resource
                                     ->searchable()
                                     ->label('Sales Person')
                                     ->options(function () {
-                                    return \App\Models\Staff::all()->pluck('name', 'id');
+                                        return \App\Models\Staff::all()->pluck('name', 'id');
                                     }),
                                 Forms\Components\Select::make('project_type')
                                     ->options([
@@ -151,14 +137,12 @@ class AdsProjectResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('project_name')
-                    ->searchable()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('client.name')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('project_type')
@@ -201,6 +185,9 @@ class AdsProjectResource extends Resource
             ->filters([
                 //
             ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+            ])
             ->actions([
                 ActionGroup::make([
                     ViewAction::make(),
@@ -213,21 +200,5 @@ class AdsProjectResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListAdsProjects::route('/'),
-            'create' => Pages\CreateAdsProject::route('/create'),
-            'edit' => Pages\EditAdsProject::route('/{record}/edit'),
-        ];
     }
 }

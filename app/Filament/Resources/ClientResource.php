@@ -22,7 +22,7 @@ class ClientResource extends Resource
 {
     protected static ?string $model = Client::class;
 
-    protected static ?string $navigationGroup = 'Clients';
+    protected static ?string $navigationGroup = 'Clients Management';
 
     public static function form(Form $form): Form
     {
@@ -164,7 +164,7 @@ class ClientResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\AdsProjectRelationManager::class,
         ];
     }
 

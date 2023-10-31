@@ -25,7 +25,7 @@ class AdsProject extends Model
         'report_image',
         'client_id',
         'person_in_charge_id',
-        'sales_person_id',
+        'salesperson_id',
     ];
 
     protected $casts = [
@@ -37,9 +37,15 @@ class AdsProject extends Model
         return $this->belongsTo(Client::class);
     }
 
-    public function staff(): BelongsTo
+    public function personInCharge(): BelongsTo
     {
-        return $this->belongsTo(Staff::class);
+        return $this->belongsTo(Staff::class, 'person_in_charge_id');
+    }
+
+    // Define the salesperson relationship
+    public function salesperson(): BelongsTo
+    {
+        return $this->belongsTo(Staff::class, 'salesperson_id');
     }
 
 }

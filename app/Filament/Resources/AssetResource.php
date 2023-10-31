@@ -32,7 +32,7 @@ class AssetResource extends Resource
 {
     protected static ?string $model = Asset::class;
 
-//    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
+//  protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
     protected static ?string $navigationGroup = 'Assets Management';
     protected static ?string $navigationLabel = 'Electronic Devices';
 

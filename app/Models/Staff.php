@@ -16,9 +16,16 @@ class Staff extends Model
         'team',
     ];
 
-    public function adsProject(): HasMany
+    // Define the AdsProjects where the staff member is the person in charge
+    public function personInChargeProjects(): HasMany
     {
-        return $this->hasMany(AdsProject::class);
+        return $this->hasMany(AdsProject::class, 'person_in_charge_id');
+    }
+
+    // Define the AdsProjects where the staff member is the salesperson
+    public function salespersonProjects(): HasMany
+    {
+        return $this->hasMany(AdsProject::class, 'salesperson_id');
     }
 
 }
