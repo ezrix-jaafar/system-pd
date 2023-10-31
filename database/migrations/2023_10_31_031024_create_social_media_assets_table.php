@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('account_password');
             $table->string('account_email')->nullable();
             $table->string('account_phone')->nullable();
-            $table->string('account_niche')->nullable();
+            $table->JSON('account_niche')->nullable();
             $table->longText('account_note')->nullable();
             $table->JSON('secret_question')->nullable();
             $table->timestamps();

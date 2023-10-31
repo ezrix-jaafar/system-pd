@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class SocialMediaAsset extends Model
 {
@@ -24,6 +25,13 @@ class SocialMediaAsset extends Model
     ];
 
     protected $casts = [
-        'secret_question' => 'json'
+        'secret_question' => 'json',
+        'account_niche' => 'json',
     ];
+
+    public function assetHolders(): belongsToMany
+    {
+        return $this->belongsToMany(AssetHolder::class);
+    }
+
 }

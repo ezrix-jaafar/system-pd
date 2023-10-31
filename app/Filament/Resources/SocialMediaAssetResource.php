@@ -23,7 +23,7 @@ class SocialMediaAssetResource extends Resource
 {
     protected static ?string $model = SocialMediaAsset::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Assets Management';
 
     public static function form(Form $form): Form
     {
@@ -62,10 +62,9 @@ class SocialMediaAssetResource extends Resource
                                         'Page' => 'Page',
                                     ])
                                     ->required(),
-                                Forms\Components\TextInput::make('account_niche')
-                                    ->autofocus()
-                                    ->required()
-                                    ->placeholder(__('Account Niche'))
+                                Forms\Components\TagsInput::make('account_niche')
+                                    ->splitKeys(['Tab', 'Enter', ','])
+                                    ->hint('Press Tab, Enter or Comma to add a tag')
                                     ->columnSpan('full'),
                                 Forms\Components\Textarea::make('account_note')
                                     ->autofocus()
@@ -177,7 +176,7 @@ class SocialMediaAssetResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\AssetHolderRelationManager::class,
         ];
     }
 
