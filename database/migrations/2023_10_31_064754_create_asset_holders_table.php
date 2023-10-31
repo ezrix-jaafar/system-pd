@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('social_media_assets_asset_holders', function (Blueprint $table) {
+        Schema::create('asset_holder_social_media_asset', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(SocialMediaAsset::class);
             $table->foreignIdFor(AssetHolder::class);

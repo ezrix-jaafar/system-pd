@@ -18,7 +18,7 @@ class AssetHolder extends Model
         'note',
     ];
 
-    public function socialMediaAssets(): belongsToMany
+    public function SocialMediaAsset(): belongsToMany
     {
         return $this->belongsToMany(SocialMediaAsset::class);
     }

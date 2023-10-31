@@ -29,7 +29,7 @@ class SocialMediaAsset extends Model
         'account_niche' => 'json',
     ];
 
-    public function assetHolders(): belongsToMany
+    public function AssetHolder(): belongsToMany
     {
         return $this->belongsToMany(AssetHolder::class);
     }
