@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AssetHolder extends Model
 {
@@ -18,10 +20,14 @@ class AssetHolder extends Model
         'note',
     ];
 
-    public function SocialMediaAsset(): belongsToMany
+    public function SocialMediaAsset(): belongsTo
     {
-        return $this->belongsToMany(SocialMediaAsset::class);
+        return $this->belongsTo(SocialMediaAsset::class);
     }
 
+    public function staff(): belongsTo
+    {
+        return $this->belongsTo(Staff::class);
+    }
 
 }

@@ -40,7 +40,9 @@ class AssetHolderRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('staff.name'),
+                Tables\Columns\TextColumn::make('received_date'),
+                Tables\Columns\TextColumn::make('return_date'),
             ])
             ->filters([
                 //

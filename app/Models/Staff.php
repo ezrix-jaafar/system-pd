@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Staff extends Model
@@ -26,6 +27,16 @@ class Staff extends Model
     public function salespersonProjects(): HasMany
     {
         return $this->hasMany(AdsProject::class, 'salesperson_id');
+    }
+
+    public function AssetHolder(): belongsTo
+    {
+        return $this->belongsTo(AssetHolder::class);
+    }
+
+    public function AdsCampaign(): HasMany
+    {
+        return $this->hasMany(AdsCampaign::class);
     }
 
 }

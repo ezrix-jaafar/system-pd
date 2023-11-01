@@ -16,6 +16,7 @@ use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Rawilk\FilamentPasswordInput\Password;
 
@@ -155,6 +156,15 @@ class SocialMediaAssetResource extends Resource
                         'Group' => 'info',
                         'Page' => 'warning',
                     }),
+                TextColumn::make('staff.name')
+                    ->getStateUsing(function (Model $record) {
+                        $latestHolder = $record->AssetHolder()->latest()->first();
+                        if ($latestHolder === null) {
+                            return '-'; // Return an empty string if the latest owner has a return_date
+                        }
+                        return $latestHolder->staff ? $latestHolder->staff->name : '-';
+                    })
+                    ->searchable(),
             ])
             ->filters([
                 //

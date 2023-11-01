@@ -66,6 +66,10 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-shopping-cart')
                     ->collapsed(),
                 NavigationGroup::make()
+                    ->label('Marketing')
+                    ->icon('heroicon-o-presentation-chart-line')
+                    ->collapsed(),
+                NavigationGroup::make()
                     ->label('Administration')
                     ->icon('heroicon-o-cog')
                     ->collapsed(),
