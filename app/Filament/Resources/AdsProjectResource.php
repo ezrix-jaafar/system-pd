@@ -166,24 +166,26 @@ class AdsProjectResource extends Resource
                     ->sortable()
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'Google Ads' => 'primary',
-                        'Facebook Ads' => 'secondary',
+                        'Google Ads' => 'danger',
+                        'Facebook Ads' => 'info',
                         'LinkedIn Ads' => 'success',
-                        'TikTok Ads' => 'warning',
-                        'Shopee Ads' => 'danger',
+                        'TikTok Ads' => 'gray',
+                        'Shopee Ads' => 'warning',
+
                     }),
                 Tables\Columns\TextColumn::make('project_status')
                     ->searchable()
                     ->sortable()
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'New' => 'primary',
+                        'New' => 'gray',
                         'Active' => 'secondary',
                         'On Hold' => 'success',
                         'Ended' => 'warning',
                         'Renew Active' => 'danger',
                         'Renew On Hold' => 'primary',
                         'Renew Ended' => 'secondary',
+
                     }),
                 Tables\Columns\TextColumn::make('salesperson.name')
                     ->label('Sales Person')
