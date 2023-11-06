@@ -97,6 +97,7 @@ class ElectricityResource extends Resource
                         ->image()
                         ->imageEditor()
                         ->openable()
+                        ->downloadable()
                         ->columnSpan('full'),
 
 
@@ -122,7 +123,9 @@ class ElectricityResource extends Resource
 
                     FileUpload::make('payment_slip')
                     ->image()
-                    ->imageEditor(),
+                    ->imageEditor()
+                    ->openable()
+                    ->downloadable(),
 
 
                     ]),

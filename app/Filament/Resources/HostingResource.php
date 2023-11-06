@@ -62,6 +62,8 @@ class HostingResource extends Resource
                                     ->placeholder(__('Expiry Date')),
                                 Forms\Components\Select::make('hosting_provider_id')
                                     ->searchable()
+                                    ->live()
+                                    ->reactive()
                                     ->relationship(name: 'HostingProvider', titleAttribute: 'hosting_provider_id')
                                     ->options(function () {
                                         return \App\Models\HostingProvider::all()->pluck('hosting_company', 'id');

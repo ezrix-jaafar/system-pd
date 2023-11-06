@@ -179,13 +179,12 @@ class AdsProjectResource extends Resource
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'New' => 'gray',
-                        'Active' => 'secondary',
-                        'On Hold' => 'success',
-                        'Ended' => 'warning',
-                        'Renew Active' => 'danger',
+                        'Active' => 'green',
+                        'On Hold' => 'red',
+                        'Ended' => 'blue',
+                        'Renew Active' => 'yellow',
                         'Renew On Hold' => 'primary',
-                        'Renew Ended' => 'secondary',
-
+                        'Renew Ended' => 'teal',
                     }),
                 Tables\Columns\TextColumn::make('salesperson.name')
                     ->label('Sales Person')

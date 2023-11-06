@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('domain_name')->unique();
             $table->date('purchase_date')->nullable();
             $table->date('expiry_date')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('hosting_id');
             $table->foreign('hosting_id')->references('id')->on('hostings');
             $table->string('domain_provider')->nullable();

@@ -14,6 +14,7 @@ class Domain extends Model
         'domain_name',
         'purchase_date',
         'expiry_date',
+        'is_active',
         'hosting_id',
         'domain_provider',
         'domain_provider_url',

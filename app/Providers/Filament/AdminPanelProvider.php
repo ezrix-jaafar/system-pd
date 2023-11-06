@@ -32,6 +32,17 @@ class AdminPanelProvider extends PanelProvider
             ->plugin(FilamentAccessControlPlugin::make())
             ->colors([
                 'primary' => Color::Blue,
+                'yellow' => Color::Yellow,
+                'green' => Color::Green,
+                'red' => Color::Red,
+                'blue' => Color::Blue,
+                'indigo' => Color::Indigo,
+                'purple' => Color::Purple,
+                'pink' => Color::Pink,
+                'orange' => Color::Orange,
+                'amber' => Color::Amber,
+                'emerald' => Color::Emerald,
+                'teal' => Color::Teal
             ])
             ->brandName('System PD')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

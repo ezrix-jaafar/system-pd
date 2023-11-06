@@ -120,9 +120,9 @@ class AssetResource extends Resource
                 Tables\Columns\TextColumn::make('asset_type')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'MobilePhone' => 'info',
-                        'Laptop' => 'success',
-                        'Desktop' => 'warning',
+                        'MobilePhone' => 'teal',
+                        'Laptop' => 'pink',
+                        'Desktop' => 'amber',
                     }),
                 Tables\Columns\TextColumn::make('owner.name')
                     ->getStateUsing(function (Model $record) {

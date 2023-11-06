@@ -92,6 +92,7 @@ class InternetResource extends Resource
                     ->image()
                     ->imageEditor()
                     ->openable()
+                    ->downloadable()
                     ->columnSpan('full'),
 
 
@@ -117,7 +118,9 @@ class InternetResource extends Resource
 
                 Forms\Components\FileUpload::make('payment_slip')
                 ->image()
-                ->imageEditor(),
+                ->imageEditor()
+                ->openable()
+                ->downloadable(),
 
 
                 ]),

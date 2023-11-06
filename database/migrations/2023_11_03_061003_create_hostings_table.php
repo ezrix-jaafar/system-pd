@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('hostings', function (Blueprint $table) {
             $table->id();
             $table->string('server_name');
-            $table->string('domain_name');
+            $table->string('domain_name')->unique();
             $table->string('package_name');
             $table->decimal('server_cost' , 8, 2);
             $table->date('purchase_date');

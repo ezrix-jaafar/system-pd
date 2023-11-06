@@ -42,7 +42,12 @@ class MerchandiseResource extends Resource
 
                                 Forms\Components\TextInput::make('product_name'),
 
-                                Forms\Components\MarkdownEditor::make('product_description'),
+                                Forms\Components\RichEditor::make('product_description')
+                                    ->disableToolbarButtons([
+                                        'blockquote',
+                                        'undo',
+                                        'redo',
+                                    ]),
 
                                 Forms\Components\TextInput::make('sales_page')
                                     ->prefixIcon('heroicon-m-globe-alt')
