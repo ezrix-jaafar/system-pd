@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\HostingProviderResource\RelationManagers;
 
-use App\Filament\Resources\HostingResource\Pages;
-use App\Filament\Resources\HostingResource\RelationManagers;
-use App\Models\Hosting;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\DeleteAction;
@@ -18,15 +15,11 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Rawilk\FilamentPasswordInput\Password;
 
-class HostingResource extends Resource
+class HostingRelationManager extends RelationManager
 {
-    protected static ?string $model = Hosting::class;
+    protected static string $relationship = 'Hosting';
 
-    protected static ?string $navigationGroup = 'Hosting & Domain';
-
-    protected static ?int $navigationSort = 1;
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -74,7 +67,7 @@ class HostingResource extends Resource
                                             ->unique()
                                             ->required(),
                                     ])->columns(2)
-                                ->columnSpan('full'),
+                                    ->columnSpan('full'),
                                 Forms\Components\TextInput::make('client_dashboard_url')
                                     ->autofocus()
                                     ->required()
@@ -141,9 +134,10 @@ class HostingResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('server_name')
                     ->sortable()
@@ -154,12 +148,12 @@ class HostingResource extends Resource
                 Tables\Columns\TextColumn::make('expiry_date')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('HostingProvider.hosting_company')
-                    ->sortable()
-                    ->searchable(),
             ])
             ->filters([
                 //
+            ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 ActionGroup::make([
@@ -173,21 +167,5 @@ class HostingResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListHostings::route('/'),
-            'create' => Pages\CreateHosting::route('/create'),
-            'edit' => Pages\EditHosting::route('/{record}/edit'),
-        ];
     }
 }

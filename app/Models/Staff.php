@@ -39,4 +39,9 @@ class Staff extends Model
         return $this->hasMany(AdsCampaign::class);
     }
 
+    public function Domain(): HasMany
+    {
+        return $this->hasMany(Domain::class);
+    }
+
 }

@@ -54,6 +54,10 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-briefcase')
                     ->collapsed(),
                 NavigationGroup::make()
+                    ->label('Hosting & Domain')
+                    ->icon('heroicon-o-server-stack')
+                    ->collapsed(),
+                NavigationGroup::make()
                     ->label('Clients Management')
                     ->icon('heroicon-o-user')
                     ->collapsed(),

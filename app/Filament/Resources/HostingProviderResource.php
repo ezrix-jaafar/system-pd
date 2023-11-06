@@ -18,7 +18,8 @@ class HostingProviderResource extends Resource
 {
     protected static ?string $model = HostingProvider::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Hosting & Domain';
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {
@@ -41,13 +42,28 @@ class HostingProviderResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('hosting_company')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('website')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('total_hosting')
+                    ->getStateUsing(function (HostingProvider $model) {
+                        return $model->Hosting()->count();
+                    })
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                \Filament\Tables\Actions\ActionGroup::make([
+                    \Filament\Tables\Actions\ViewAction::make(),
+                    \Filament\Tables\Actions\EditAction::make(),
+                    \Filament\Tables\Actions\DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -59,7 +75,7 @@ class HostingProviderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\HostingRelationManager::class,
         ];
     }
 

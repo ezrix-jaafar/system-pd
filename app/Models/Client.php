@@ -29,4 +29,9 @@ class Client extends Model
     {
         return $this->hasMany(AdsProject::class);
     }
+
+    public function Domain(): HasMany
+    {
+        return $this->hasMany(Domain::class);
+    }
 }
