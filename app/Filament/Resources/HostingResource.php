@@ -62,21 +62,30 @@ class HostingResource extends Resource
                                     ->placeholder(__('Expiry Date')),
                                 Forms\Components\Select::make('hosting_provider_id')
                                     ->searchable()
-                                    ->live()
-                                    ->reactive()
-                                    ->relationship(name: 'HostingProvider', titleAttribute: 'hosting_provider_id')
-                                    ->options(function () {
-                                        return \App\Models\HostingProvider::all()->pluck('hosting_company', 'id');
-                                    })
+                                    ->relationship(name: 'HostingProvider', titleAttribute: 'hosting_company')
                                     ->createOptionForm([
                                         Forms\Components\TextInput::make('hosting_company')
-                                            ->unique()
                                             ->required(),
                                         Forms\Components\TextInput::make('website')
-                                            ->unique()
                                             ->required(),
-                                    ])->columns(2)
-                                ->columnSpan('full'),
+                                    ])->columnSpan('full'),
+//                                Forms\Components\Select::make('hosting_provider_id')
+//                                    ->searchable()
+//                                    ->live()
+//                                    ->reactive()
+//                                    ->relationship(name: 'HostingProvider', titleAttribute: 'hosting_provider_id')
+//                                    ->options(function () {
+//                                        return \App\Models\HostingProvider::all()->pluck('hosting_company', 'id');
+//                                    })
+//                                    ->createOptionForm([
+//                                        Forms\Components\TextInput::make('hosting_company')
+//                                            ->unique()
+//                                            ->required(),
+//                                        Forms\Components\TextInput::make('website')
+//                                            ->unique()
+//                                            ->required(),
+//                                    ])->columns(2)
+//                                ->columnSpan('full'),
                                 Forms\Components\TextInput::make('client_dashboard_url')
                                     ->autofocus()
                                     ->required()
@@ -188,6 +197,7 @@ class HostingResource extends Resource
     {
         return [
             'index' => Pages\ListHostings::route('/'),
+            'view' => Pages\ViewHosting::route('/{record}'),
             'create' => Pages\CreateHosting::route('/create'),
             'edit' => Pages\EditHosting::route('/{record}/edit'),
         ];

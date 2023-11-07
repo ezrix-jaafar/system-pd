@@ -16,7 +16,7 @@ class Domain extends Model
         'expiry_date',
         'is_active',
         'hosting_id',
-        'domain_provider',
+        'domain_registrar_id',
         'domain_provider_url',
         'domain_provider_username',
         'domain_provider_password',
@@ -37,6 +37,11 @@ class Domain extends Model
     public function Staff(): belongsTo
     {
         return $this->belongsTo(Staff::class);
+    }
+
+    public function DomainRegistrar(): belongsTo
+    {
+        return $this->belongsTo(DomainRegistrar::class);
     }
 
 }

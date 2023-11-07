@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\HostingProviderResource\Pages;
-use App\Filament\Resources\HostingProviderResource\RelationManagers;
-use App\Models\HostingProvider;
-use Faker\Provider\Text;
+use App\Filament\Resources\DomainRegistrarResource\Pages;
+use App\Filament\Resources\DomainRegistrarResource\RelationManagers;
+use App\Models\DomainRegistrar;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,22 +13,23 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class HostingProviderResource extends Resource
+class DomainRegistrarResource extends Resource
 {
-    protected static ?string $model = HostingProvider::class;
+    protected static ?string $model = DomainRegistrar::class;
 
     protected static ?string $navigationGroup = 'Hosting & Domain';
-    protected static ?int $navigationSort = 3;
+
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('hosting_company')
+                Forms\Components\TextInput::make('registrar_name')
                     ->unique()
                     ->autofocus()
                     ->required()
-                    ->placeholder(__('Hosting Company')),
+                    ->placeholder(__('Registrar Name')),
                 Forms\Components\TextInput::make('website')
                     ->unique()
                     ->autofocus()
@@ -42,28 +42,25 @@ class HostingProviderResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('hosting_company')
+                Tables\Columns\TextColumn::make('registrar_name')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('website')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('total_hosting')
-                    ->getStateUsing(function (HostingProvider $model) {
-                        return $model->Hosting()->count();
+                Tables\Columns\TextColumn::make('total_domain')
+                    ->getStateUsing(function (DomainRegistrar $model) {
+                        return $model->Domain()->count();
                     })
                     ->searchable()
                     ->sortable(),
+
             ])
             ->filters([
                 //
             ])
             ->actions([
-                \Filament\Tables\Actions\ActionGroup::make([
-                    \Filament\Tables\Actions\ViewAction::make(),
-                    \Filament\Tables\Actions\EditAction::make(),
-                    \Filament\Tables\Actions\DeleteAction::make(),
-                ]),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -75,16 +72,16 @@ class HostingProviderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\HostingRelationManager::class,
+            RelationManagers\DomainRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListHostingProviders::route('/'),
-            'create' => Pages\CreateHostingProvider::route('/create'),
-            'edit' => Pages\EditHostingProvider::route('/{record}/edit'),
+            'index' => Pages\ListDomainRegistrars::route('/'),
+            'create' => Pages\CreateDomainRegistrar::route('/create'),
+            'edit' => Pages\EditDomainRegistrar::route('/{record}/edit'),
         ];
     }
 }

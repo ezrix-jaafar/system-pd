@@ -19,7 +19,8 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('hosting_id');
             $table->foreign('hosting_id')->references('id')->on('hostings');
-            $table->string('domain_provider')->nullable();
+            $table->unsignedBigInteger('domain_registrar_id');
+            $table->foreign('domain_registrar_id')->references('id')->on('domain_registrars');
             $table->string('domain_provider_url')->nullable();
             $table->string('domain_provider_username')->nullable();
             $table->string('domain_provider_password')->nullable();

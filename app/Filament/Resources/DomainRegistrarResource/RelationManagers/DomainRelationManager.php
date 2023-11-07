@@ -1,33 +1,22 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\DomainRegistrarResource\RelationManagers;
 
-use App\Filament\Resources\DomainResource\Pages;
-use App\Filament\Resources\DomainResource\RelationManagers;
-use App\Models\Domain;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\HtmlString;
 use Rawilk\FilamentPasswordInput\Password;
 
-class DomainResource extends Resource
+class DomainRelationManager extends RelationManager
 {
-    protected static ?string $model = Domain::class;
+    protected static string $relationship = 'Domain';
 
-    protected static ?string $navigationGroup = 'Hosting & Domain';
-
-    protected static ?int $navigationSort = 2;
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -77,7 +66,7 @@ class DomainResource extends Resource
                                         return \App\Models\Staff::all()->pluck('name', 'id');
                                     })
 
-                            ])->columns(2),
+                            ]),
                     ]),
                 Forms\Components\Group::make()
                     ->schema([
@@ -87,22 +76,10 @@ class DomainResource extends Resource
                                     ->autofocus()
                                     ->required(),
 
-                            ])->columns(2),
+                            ]),
 
                         Forms\Components\Section::make('Registrar Details')
                             ->schema([
-                                Forms\Components\Select::make('domain_registrar_id')
-                                    ->searchable()
-                                    ->relationship(name: 'DomainRegistrar', titleAttribute: 'registrar_name')
-                                    ->options(function () {
-                                        return \App\Models\DomainRegistrar::all()->pluck('registrar_name', 'id');
-                                    })
-                                    ->createOptionForm([
-                                        Forms\Components\TextInput::make('registrar_name')
-                                            ->required(),
-                                        Forms\Components\TextInput::make('website')
-                                            ->required(),
-                                    ])->columnSpan('full'),
                                 Forms\Components\TextInput::make('domain_provider_url')
                                     ->autofocus()
                                     ->required()
@@ -123,14 +100,15 @@ class DomainResource extends Resource
                                     ->autofocus()
                                     ->required()
                                     ->placeholder(__('Domain Provider Password')),
-                            ])->columns(2),
+                            ]),
                     ]),
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('domain_name')
                     ->searchable()
@@ -141,44 +119,24 @@ class DomainResource extends Resource
                 Tables\Columns\TextColumn::make('hosting.server_name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('DomainRegistrar.registrar_name')
-                    ->searchable()
-                    ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
                     ->label(__('Active'))
                     ->boolean(),
-
             ])
             ->filters([
                 //
             ])
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
+            ])
             ->actions([
-                ActionGroup::make([
-                    ViewAction::make(),
-                    EditAction::make(),
-                    DeleteAction::make(),
-                ]),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            RelationManagers\DomainRelationManager::class,
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListDomains::route('/'),
-            'create' => Pages\CreateDomain::route('/create'),
-            'edit' => Pages\EditDomain::route('/{record}/edit'),
-        ];
     }
 }

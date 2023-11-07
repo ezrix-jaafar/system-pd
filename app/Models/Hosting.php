@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Hosting extends Model
 {
@@ -30,7 +31,12 @@ class Hosting extends Model
 
     public function HostingProvider(): belongsTo
     {
-        return $this->belongsTo(HostingProvider::class , 'hosting_provider_id');
+        return $this->belongsTo(HostingProvider::class);
+    }
+
+    public function Domain(): hasMany
+    {
+        return $this->hasMany(Domain::class);
     }
 
 }
