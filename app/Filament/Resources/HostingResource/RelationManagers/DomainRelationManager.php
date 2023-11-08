@@ -29,7 +29,18 @@ class DomainRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
+                Tables\Columns\TextColumn::make('domain_name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('expiry_date')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('DomainRegistrar.registrar_name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\IconColumn::make('is_active')
+                    ->label(__('Active'))
+                    ->boolean(),
             ])
             ->filters([
                 //
