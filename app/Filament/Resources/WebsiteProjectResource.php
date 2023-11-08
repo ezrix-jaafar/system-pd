@@ -32,30 +32,53 @@ class WebsiteProjectResource extends Resource
                                     ->required()
                                     ->placeholder(__('Project Name'))
                                     ->columnSpan('full'),
-                                Forms\Components\TextInput::make('project_status')
+                                Forms\Components\Select::make('project_status')
                                     ->autofocus()
                                     ->required()
-                                    ->placeholder(__('Project Status')),
+                                    ->placeholder(__('Project Status'))
+                                    ->options([
+                                        'Domain Pending' => 'Domain Pending',
+                                        'Domain Locked' => 'Domain Locked',
+                                        'Domain Purchased' => 'Domain Purchased',
+                                        'Work In Progress' => 'Work In Progress',
+                                        'Done' => 'Done',
+                                        'Cancel' => 'Cancel',
+                                    ]),
                                 Forms\Components\DatePicker::make('date')
                                     ->autofocus()
                                     ->required()
                                     ->placeholder(__('Date')),
-                                Forms\Components\TextInput::make('client_id')
-                                    ->autofocus()
+                                Forms\Components\Select::make('client_id')
+                                    ->relationship('client', 'name')
                                     ->required()
-                                    ->placeholder(__('Client ID')),
-                                Forms\Components\TextInput::make('salesperson_id')
-                                    ->autofocus()
+                                    ->searchable()
+                                    ->options(function () {
+                                        return \App\Models\Client::all()->pluck('name', 'id');
+                                    }),
+                                Forms\Components\Select::make('person_in_charge_id')
+                                    ->relationship('personInCharge')
                                     ->required()
-                                    ->placeholder(__('Salesperson ID')),
-                                Forms\Components\TextInput::make('person_in_charge_id')
-                                    ->autofocus()
+                                    ->searchable()
+                                    ->label('Person In Charge')
+                                    ->options(function () {
+                                        return \App\Models\Staff::all()->pluck('name', 'id');
+                                    }),
+                                Forms\Components\Select::make('salesperson_id')
+                                    ->relationship('salesperson')
                                     ->required()
-                                    ->placeholder(__('Person In Charge ID')),
-                                Forms\Components\TextInput::make('coordinator_id')
-                                    ->autofocus()
+                                    ->searchable()
+                                    ->label('Sales Person')
+                                    ->options(function () {
+                                        return \App\Models\Staff::all()->pluck('name', 'id');
+                                    }),
+                                Forms\Components\Select::make('coordinator_id')
+                                    ->relationship('coordinator')
                                     ->required()
-                                    ->placeholder(__('Coordinator ID')),
+                                    ->searchable()
+                                    ->label('Project Coordinator')
+                                    ->options(function () {
+                                        return \App\Models\Staff::all()->pluck('name', 'id');
+                                    }),
 
                             ])->columns(2),
                     ]),
@@ -78,7 +101,20 @@ class WebsiteProjectResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('project_name')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\SelectColumn::make('project_status')
+                    ->sortable()
+                    ->searchable()
+                    ->options([
+                        'Domain Pending' => 'Domain Pending',
+                        'Domain Locked' => 'Domain Locked',
+                        'Domain Purchased' => 'Domain Purchased',
+                        'Work In Progress' => 'Work In Progress',
+                        'Done' => 'Done',
+                        'Cancel' => 'Cancel',
+                    ]),
             ])
             ->filters([
                 //
