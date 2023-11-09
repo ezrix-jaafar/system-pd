@@ -17,7 +17,6 @@ class Domain extends Model
         'is_active',
         'hosting_id',
         'domain_registrar_id',
-        'domain_provider_url',
         'domain_provider_username',
         'domain_provider_password',
         'client_id',
@@ -42,6 +41,11 @@ class Domain extends Model
     public function DomainRegistrar(): belongsTo
     {
         return $this->belongsTo(DomainRegistrar::class);
+    }
+
+    public function WebsiteProject(): belongsTo
+    {
+        return $this->belongsTo(WebsiteProject::class);
     }
 
 }

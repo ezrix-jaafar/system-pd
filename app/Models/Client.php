@@ -34,4 +34,9 @@ class Client extends Model
     {
         return $this->hasMany(Domain::class);
     }
+
+    public function WebsiteProject(): HasMany
+    {
+        return $this->hasMany(WebsiteProject::class);
+    }
 }

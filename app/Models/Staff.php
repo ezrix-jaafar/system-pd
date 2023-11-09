@@ -17,16 +17,31 @@ class Staff extends Model
         'team',
     ];
 
-    // Define the AdsProjects where the staff member is the person in charge
     public function personInChargeProjects(): HasMany
     {
         return $this->hasMany(AdsProject::class, 'person_in_charge_id');
+
     }
 
-    // Define the AdsProjects where the staff member is the salesperson
     public function salespersonProjects(): HasMany
     {
         return $this->hasMany(AdsProject::class, 'salesperson_id');
+    }
+
+    public function personInChargeWebProjects(): HasMany
+    {
+        return $this->hasMany(WebsiteProject::class, 'person_in_charge_id');
+
+    }
+
+    public function salespersonWebProjects(): HasMany
+    {
+        return $this->hasMany(WebsiteProject::class, 'salesperson_id');
+    }
+
+    public function coordinatorWebProjects(): HasMany
+    {
+        return $this->hasMany(WebsiteProject::class, 'coordinator_id');
     }
 
     public function AssetHolder(): belongsTo

@@ -103,11 +103,6 @@ class DomainResource extends Resource
                                         Forms\Components\TextInput::make('website')
                                             ->required(),
                                     ])->columnSpan('full'),
-                                Forms\Components\TextInput::make('domain_provider_url')
-                                    ->autofocus()
-                                    ->required()
-                                    ->placeholder(__('Domain Provider URL'))
-                                    ->columnSpan('full'),
                                 Forms\Components\TextInput::make('domain_provider_username')
                                     ->autofocus()
                                     ->required()
