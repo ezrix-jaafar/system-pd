@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\HtmlString;
 use Rawilk\FilamentPasswordInput\Password;
+use App\Tables\Columns\ColorSelect;
+
 
 class WebsiteProjectResource extends Resource
 {
@@ -336,17 +338,18 @@ class WebsiteProjectResource extends Resource
                 Tables\Columns\TextColumn::make('coordinator.name')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\SelectColumn::make('project_status')
-                    ->sortable()
-                    ->searchable()
-                    ->options([
-                        'Domain Pending' => 'Domain Pending',
-                        'Domain Locked' => 'Domain Locked',
-                        'Domain Purchased' => 'Domain Purchased',
-                        'Work In Progress' => 'Work In Progress',
-                        'Done' => 'Done',
-                        'Cancel' => 'Cancel',
-                    ]),
+                ColorSelect::make('project_status'),
+//                Tables\Columns\SelectColumn::make('project_status')
+//                    ->sortable()
+//                    ->searchable()
+//                    ->options([
+//                        'Domain Pending' => 'Domain Pending',
+//                        'Domain Locked' => 'Domain Locked',
+//                        'Domain Purchased' => 'Domain Purchased',
+//                        'Work In Progress' => 'Work In Progress',
+//                        'Done' => 'Done',
+//                        'Cancel' => 'Cancel',
+//                    ]),
 
             ])
             ->filters([
