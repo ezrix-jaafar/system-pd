@@ -29,7 +29,6 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('')
-            ->plugin(FilamentAccessControlPlugin::make())
             ->colors([
                 'primary' => Color::Blue,
                 'yellow' => Color::Yellow,

@@ -159,8 +159,8 @@ return [
         /*
          * Package Service Providers...
          */
+        /*php -
 
-        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,

@@ -21,7 +21,7 @@ class WebsiteProjectResource extends Resource
 {
     protected static ?string $model = WebsiteProject::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Projects Management';
 
     public static function form(Form $form): Form
     {
@@ -338,18 +338,17 @@ class WebsiteProjectResource extends Resource
                 Tables\Columns\TextColumn::make('coordinator.name')
                     ->searchable()
                     ->sortable(),
-                ColorSelect::make('project_status'),
-//                Tables\Columns\SelectColumn::make('project_status')
-//                    ->sortable()
-//                    ->searchable()
-//                    ->options([
-//                        'Domain Pending' => 'Domain Pending',
-//                        'Domain Locked' => 'Domain Locked',
-//                        'Domain Purchased' => 'Domain Purchased',
-//                        'Work In Progress' => 'Work In Progress',
-//                        'Done' => 'Done',
-//                        'Cancel' => 'Cancel',
-//                    ]),
+                Tables\Columns\SelectColumn::make('project_status')
+                    ->sortable()
+                    ->searchable()
+                    ->options([
+                        'Domain Pending' => 'Domain Pending',
+                        'Domain Locked' => 'Domain Locked',
+                        'Domain Purchased' => 'Domain Purchased',
+                        'Work In Progress' => 'Work In Progress',
+                        'Done' => 'Done',
+                        'Cancel' => 'Cancel',
+                    ]),
 
             ])
             ->filters([
