@@ -82,6 +82,10 @@ class AdminPanelProvider extends PanelProvider
                     ->icon('heroicon-o-presentation-chart-line')
                     ->collapsed(),
                 NavigationGroup::make()
+                    ->label('Training Management')
+                    ->icon('heroicon-o-clipboard-document-list')
+                    ->collapsed(),
+                NavigationGroup::make()
                     ->label('Administration')
                     ->icon('heroicon-o-cog')
                     ->collapsed(),
