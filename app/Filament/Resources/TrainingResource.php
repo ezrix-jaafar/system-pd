@@ -9,6 +9,10 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -74,11 +78,9 @@ class TrainingResource extends Resource
                                     ->placeholder(__('Training Type')),
                                 Forms\Components\TextInput::make('training_fees')
                                     ->autofocus()
-                                    ->required()
                                     ->placeholder(__('Training Fees')),
                                 Forms\Components\Textarea::make('training_remarks')
                                     ->autofocus()
-                                    ->required()
                                     ->placeholder(__('Training Remarks'))
                                     ->rows(4)
                                     ->columnSpan('full'),
@@ -91,13 +93,31 @@ class TrainingResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('training_name')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('training_type')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('training_provider')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('training_start_date')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('training_end_date')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -109,7 +129,7 @@ class TrainingResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\TrainingReportRelationManager::class,
         ];
     }
 

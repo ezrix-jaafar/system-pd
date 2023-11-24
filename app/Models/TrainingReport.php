@@ -10,14 +10,23 @@ class TrainingReport extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'staff_id',
+        'user_id',
         'training_report',
         'training_attachment',
     ];
 
-    public function staff(): BelongsTo
+    protected $casts = [
+        'training_attachment' => 'json',
+    ];
+
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Staff::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function training(): BelongsTo
+    {
+        return $this->belongsTo(Training::class);
     }
 
 }

@@ -43,6 +43,6 @@ class WebsiteProject extends Model
 
     public function domain(): BelongsTo
     {
-        return $this->belongsTo(domain::class, 'domain_name_id');
+        return $this->belongsTo(Domain::class, 'domain_name_id');
     }
 }

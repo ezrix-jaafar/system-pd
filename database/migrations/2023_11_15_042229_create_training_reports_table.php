@@ -13,17 +13,13 @@ return new class extends Migration
     {
         Schema::create('training_reports', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('staff_id');
-            $table->foreign('staff_id')->references('id')->on('staff')->cascadeOnDelete();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('training_id');
+            $table->foreign('training_id')->references('id')->on('trainings')->cascadeOnDelete();
             $table->longText('training_report')->nullable();
             $table->json('training_attachment')->nullable();
             $table->timestamps();
-        });
-
-        Schema::create('training_report_training', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('training_report_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('training_id')->constrained()->cascadeOnDelete();
         });
 
     }

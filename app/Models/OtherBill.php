@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\MonthEnum; // Import MonthEnum
 
-class OtherBills extends Model
+class OtherBill extends Model
 {
     use HasFactory;
 

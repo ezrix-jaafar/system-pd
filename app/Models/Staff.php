@@ -59,4 +59,9 @@ class Staff extends Model
         return $this->hasMany(Domain::class);
     }
 
+    public function TrainingReport(): HasMany
+    {
+        return $this->hasMany(TrainingReport::class);
+    }
+
 }
