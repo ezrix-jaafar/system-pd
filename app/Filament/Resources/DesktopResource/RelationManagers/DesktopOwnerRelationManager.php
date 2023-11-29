@@ -1,23 +1,18 @@
 <?php
 
-namespace App\Filament\Resources\PhoneResource\RelationManagers;
+namespace App\Filament\Resources\DesktopResource\RelationManagers;
 
-use App\Models\PhoneOwner;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PhoneOwnerRelationManager extends RelationManager
+class DesktopOwnerRelationManager extends RelationManager
 {
-    protected static string $relationship = 'PhoneOwner';
+    protected static string $relationship = 'DesktopOwner';
 
     public function form(Form $form): Form
     {
@@ -73,26 +68,13 @@ class PhoneOwnerRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                ActionGroup::make([
-                    ViewAction::make(),
-                    EditAction::make(),
-                    DeleteAction::make(),
-                ]),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ])->defaultSort('created_at', 'desc');
+            ]);
     }
-//    public function create($data)
-//    {
-//        $PhoneOwner = new PhoneOwner();
-//        $PhoneOwner->create($data);
-//    }
-//
-//    public function update($record, $data)
-//    {
-//        $record->update($data);
-//    }
 }

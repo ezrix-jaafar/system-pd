@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Phone extends Model
+class Desktop extends Model
 {
     use HasFactory;
 
@@ -24,16 +23,8 @@ class Phone extends Model
         'notes',
     ];
 
-    public function PhoneOwner(): BelongsToMany
+    public function DesktopOwner(): BelongsToMany
     {
-        return $this->belongsToMany(PhoneOwner::class);
+        return $this->belongsToMany(DesktopOwner::class);
     }
-
-    public function PhoneRepair(): BelongsToMany
-    {
-        return $this->belongsToMany(PhoneRepair::class);
-    }
-
 }
-
-

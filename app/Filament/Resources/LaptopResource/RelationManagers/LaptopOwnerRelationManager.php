@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Filament\Resources\PhoneResource\RelationManagers;
+namespace App\Filament\Resources\LaptopResource\RelationManagers;
 
-use App\Models\PhoneOwner;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -15,9 +14,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PhoneOwnerRelationManager extends RelationManager
+class LaptopOwnerRelationManager extends RelationManager
 {
-    protected static string $relationship = 'PhoneOwner';
+    protected static string $relationship = 'LaptopOwner';
 
     public function form(Form $form): Form
     {
@@ -85,14 +84,4 @@ class PhoneOwnerRelationManager extends RelationManager
                 ]),
             ])->defaultSort('created_at', 'desc');
     }
-//    public function create($data)
-//    {
-//        $PhoneOwner = new PhoneOwner();
-//        $PhoneOwner->create($data);
-//    }
-//
-//    public function update($record, $data)
-//    {
-//        $record->update($data);
-//    }
 }

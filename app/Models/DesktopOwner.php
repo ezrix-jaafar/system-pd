@@ -6,9 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class PhoneOwner extends Model
+class DesktopOwner extends Model
 {
     use HasFactory;
 
@@ -20,14 +19,13 @@ class PhoneOwner extends Model
         'note',
     ];
 
-    public function Phone(): BelongsToMany
+    Public function Desktop(): BelongsToMany
     {
-        return $this->belongsToMany(Phone::class);
+        return $this->belongsToMany(Desktop::class);
     }
 
-    public function User(): belongsTo
+    Public function User(): belongsTo
     {
         return $this->belongsTo(User::class);
     }
-
 }

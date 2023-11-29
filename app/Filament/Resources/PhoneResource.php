@@ -10,15 +10,20 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class PhoneResource extends Resource
 {
     protected static ?string $model = Phone::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Assets Management';
 
     public static function form(Form $form): Form
     {
@@ -88,14 +93,53 @@ class PhoneResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('brand'),
+                Tables\Columns\TextColumn::make('ram')
+                    ->suffix('GB'),
+                Tables\Columns\TextColumn::make('storage')
+                    ->suffix('GB'),
+                Tables\Columns\TextColumn::make('phone_owner.user_id')
+                    ->getStateUsing(function (Model $record) {
+                        $latestOwner = $record->PhoneOwner()->latest()->first();
+
+                        return $latestOwner ? $latestOwner->user->name : ''; // Return the owner's name if available
+                    })->searchable(),
+
+                Tables\Columns\IconColumn::make('PhoneOwner.availability')
+                    ->label('Availability')
+                    ->getStateUsing(function (Model $record) {
+                        $latestOwner = $record->PhoneOwner()->latest()->first();
+
+                        return $latestOwner ? $latestOwner->record_type : ''; // Return the owner's name if available
+                    })
+
+                    ->icon(fn (string $state): string => match ($state) {
+                        'Collect' => 'heroicon-o-x-circle',
+                        'Return' => 'heroicon-o-check-circle',
+                    })
+                    ->colors([
+                        'danger' => 'Collect',
+                        'success' => 'Return',
+                    ]),
+                Tables\Columns\IconColumn::make('condition')
+                    ->icon(fn (string $state): string => match ($state) {
+                        'Not Working' => 'heroicon-o-x-circle',
+                        'Working' => 'heroicon-o-check-circle',
+                    })
+                    ->colors([
+                        'danger' => 'Not Working',
+                        'success' => 'Working',
+                    ]),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -107,6 +151,7 @@ class PhoneResource extends Resource
     {
         return [
             RelationManagers\PhoneOwnerRelationManager::class,
+            RelationManagers\PhoneRepairRelationManager::class,
         ];
     }
 

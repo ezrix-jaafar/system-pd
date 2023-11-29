@@ -2,38 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AssetResource\Pages;
-use App\Filament\Resources\AssetResource\RelationManagers;
-use App\Models\Asset;
-use App\Models\Owner;
+use App\Filament\Resources\DesktopResource\Pages;
+use App\Filament\Resources\DesktopResource\RelationManagers;
+use App\Models\Desktop;
 use Filament\Forms;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
-use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Closure;
 
-
-
-class AssetResource extends Resource
+class DesktopResource extends Resource
 {
-    protected static ?string $model = Asset::class;
+    protected static ?string $model = Desktop::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
-    protected static ?string $navigationLabel = 'Electronic Devices';
+    protected static ?string $navigationGroup = 'Assets Management';
 
     public static function form(Form $form): Form
     {
@@ -43,32 +29,24 @@ class AssetResource extends Resource
 
                     ->schema([
 
-                        Forms\Components\Section::make('Asset Details')
+                        Forms\Components\Section::make('Desktop Details')
 
                             ->schema([
 
-
-                                Forms\Components\Select::make('asset_type')
-                                    ->options([
-                                        'MobilePhone' => 'Mobile Phone',
-                                        'Laptop' => 'Laptop',
-                                        'Desktop' => 'Desktop',
-                                    ])
-                                    ->required(),
-
                                 TextInput::make('brand'),
                                 TextInput::make('model'),
-                                TextInput::make('serial_number'),
+                                TextInput::make('serial_number')
+                                    ->columnSpan('full'),
                                 TextInput::make('ram')
-                                ->suffix('GB'),
+                                    ->suffix('GB'),
                                 TextInput::make('storage')
-                                ->suffix('GB'),
+                                    ->suffix('GB'),
                                 Forms\Components\DatePicker::make('purchase_date'),
                                 Forms\Components\DatePicker::make('warranty_expired'),
 
                                 Forms\Components\Textarea::make('notes')
-                                ->columnSpan('full')
-                                ->rows('6'),
+                                    ->columnSpan('full')
+                                    ->rows('6'),
 
                             ])->columns(2),
 
@@ -95,6 +73,7 @@ class AssetResource extends Resource
                             ->schema([
 
                                 Forms\Components\FileUpload::make('purchase_receipt')
+                                    ->hiddenLabel()
                                     ->image()
                                     ->imageEditor()
                                     ->openable()
@@ -109,51 +88,34 @@ class AssetResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-            ->striped()
             ->columns([
                 Tables\Columns\TextColumn::make('brand'),
                 Tables\Columns\TextColumn::make('ram')
                     ->suffix('GB'),
                 Tables\Columns\TextColumn::make('storage')
                     ->suffix('GB'),
-                Tables\Columns\TextColumn::make('asset_type')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'MobilePhone' => 'teal',
-                        'Laptop' => 'pink',
-                        'Desktop' => 'amber',
-                    }),
-                Tables\Columns\TextColumn::make('owner.name')
+                Tables\Columns\TextColumn::make('desktop_owner.user_id')
                     ->getStateUsing(function (Model $record) {
-                        $latestOwner = $record->owner()->latest()->first();
+                        $latestOwner = $record->DesktopOwner()->latest()->first();
 
-                        if ($latestOwner && $latestOwner->return_date !== null) {
-                            return '-'; // Return an empty string if the latest owner has a return_date
-                        }
-
-                        return $latestOwner ? $latestOwner->name : ''; // Return the owner's name if available
+                        return $latestOwner ? $latestOwner->user->name : ''; // Return the owner's name if available
                     })->searchable(),
 
-                Tables\Columns\IconColumn::make('owner.availability')
+                Tables\Columns\IconColumn::make('DesktopOwner.record_type')
                     ->label('Availability')
-                        ->getStateUsing(function ($record) {
-                            $latestOwner = $record->owner()->latest()->first();
+                    ->getStateUsing(function (Model $record) {
+                        $latestOwner = $record->DesktopOwner()->latest()->first();
 
-                            if (!$latestOwner) {
-                                return 'Available'; // No owner record, so it's available.
-                            }
-
-                            return $latestOwner->availability;
-                        })
-
+                        return $latestOwner ? $latestOwner->record_type : ''; // Return the owner's name if available
+                    })
 
                     ->icon(fn (string $state): string => match ($state) {
-                        'Not Available' => 'heroicon-o-x-circle',
-                        'Available' => 'heroicon-o-check-circle',
+                        'Collect' => 'heroicon-o-x-circle',
+                        'Return' => 'heroicon-o-check-circle',
                     })
                     ->colors([
-                        'danger' => 'Not Available',
-                        'success' => 'Available',
+                        'danger' => 'Collect',
+                        'success' => 'Return',
                     ]),
                 Tables\Columns\IconColumn::make('condition')
                     ->icon(fn (string $state): string => match ($state) {
@@ -164,19 +126,12 @@ class AssetResource extends Resource
                         'danger' => 'Not Working',
                         'success' => 'Working',
                     ]),
-
             ])
             ->filters([
-                SelectFilter::make('company')
-                    ->searchable()
-                    ->preload()
-        ])
+                //
+            ])
             ->actions([
-                ActionGroup::make([
-                    ViewAction::make(),
-                    EditAction::make(),
-                    DeleteAction::make(),
-                ]),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -188,20 +143,16 @@ class AssetResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\OwnerRelationManager::class,
-            RelationManagers\RepairRelationManager::class,
+            RelationManagers\DesktopOwnerRelationManager::class,
         ];
     }
-
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAssets::route('/'),
-            'create' => Pages\CreateAsset::route('/create'),
-            'edit' => Pages\EditAsset::route('/{record}/edit'),
+            'index' => Pages\ListDesktops::route('/'),
+            'create' => Pages\CreateDesktop::route('/create'),
+            'edit' => Pages\EditDesktop::route('/{record}/edit'),
         ];
     }
-
-
 }
