@@ -144,6 +144,7 @@ class DesktopResource extends Resource
     {
         return [
             RelationManagers\DesktopOwnerRelationManager::class,
+            RelationManagers\DesktopRepairRelationManager::class,
         ];
     }
 

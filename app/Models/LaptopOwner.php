@@ -16,6 +16,7 @@ class LaptopOwner extends Model
         'user_id',
         'record_date',
         'record_letter',
+        'recorder_id',
         'note',
     ];
 
@@ -27,5 +28,10 @@ class LaptopOwner extends Model
     public function User(): belongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function Recorder(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'recorder_id');
     }
 }

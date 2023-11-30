@@ -65,12 +65,21 @@ class PhoneOwnerRelationManager extends RelationManager
                     }),
                 Tables\Columns\TextColumn::make('User.name'),
                 Tables\Columns\TextColumn::make('record_date'),
+                Tables\Columns\TextColumn::make('Recorder.name')
+                    ->label('Recorded By')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->mutateFormDataUsing(function (array $data): array {
+                        $data['recorder_id'] = auth()->id();
+
+                        return $data;
+                    }),
             ])
             ->actions([
                 ActionGroup::make([

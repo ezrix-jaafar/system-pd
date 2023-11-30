@@ -49,11 +49,21 @@ class LaptopRepairRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('company'),
-                Tables\Columns\TextColumn::make('send_date'),
-                Tables\Columns\TextColumn::make('pickup_date'),
-                Tables\Columns\TextColumn::make('repair_cost'),
-                Tables\Columns\TextColumn::make('send_by'),
+                Tables\Columns\TextColumn::make('company')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('send_date')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('pickup_date')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('repair_cost')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('send_by')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //

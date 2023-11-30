@@ -20,6 +20,8 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->date('record_date');
             $table->string('record_letter')->nullable();
+            $table->unsignedBigInteger('recorder_id');
+            $table->foreign('recorder_id')->references('id')->on('users')->cascadeOnDelete();
             $table->longText('note')->nullable();
             $table->timestamps();
         });

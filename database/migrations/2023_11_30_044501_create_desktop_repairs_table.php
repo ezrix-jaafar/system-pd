@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Asset;
-use App\Models\Repair;
+use App\Models\Desktop;
+use App\Models\DesktopRepair;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('repairs', function (Blueprint $table) {
+        Schema::create('desktop_repairs', function (Blueprint $table) {
             $table->id();
             $table->string('company');
             $table->date('send_date');
@@ -25,10 +25,10 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('asset_repair', function (Blueprint $table) {
+        Schema::create('desktop_desktop_repair', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Asset::class);
-            $table->foreignIdFor(Repair::class);
+            $table->foreignIdFor(Desktop::class);
+            $table->foreignIdFor(DesktopRepair::class);
         });
     }
 
@@ -37,6 +37,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('repairs');
+        Schema::dropIfExists('desktop_repairs');
+        Schema::dropIfExists('desktop_desktop_repair');
     }
 };

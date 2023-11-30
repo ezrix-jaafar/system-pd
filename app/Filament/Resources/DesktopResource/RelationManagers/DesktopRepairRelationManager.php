@@ -1,30 +1,23 @@
 <?php
 
-namespace App\Filament\Resources\AssetResource\RelationManagers;
+namespace App\Filament\Resources\DesktopResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class RepairRelationManager extends RelationManager
+class DesktopRepairRelationManager extends RelationManager
 {
-    protected static string $relationship = 'repair';
+    protected static string $relationship = 'DesktopRepair';
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-//                Forms\Components\TextInput::make('id')
-//                    ->required()
-//                    ->maxLength(255),
                 Forms\Components\TextInput::make('company')
                     ->required()
                     ->columnSpan('full'),
@@ -52,11 +45,21 @@ class RepairRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('company'),
-                Tables\Columns\TextColumn::make('send_date'),
-                Tables\Columns\TextColumn::make('pickup_date'),
-                Tables\Columns\TextColumn::make('repair_cost'),
-                Tables\Columns\TextColumn::make('send_by'),
+                Tables\Columns\TextColumn::make('company')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('send_date')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('pickup_date')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('repair_cost')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('send_by')
+                    ->sortable()
+                    ->searchable(),
             ])
             ->filters([
                 //
@@ -65,11 +68,8 @@ class RepairRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                ActionGroup::make([
-                    ViewAction::make(),
-                    EditAction::make(),
-                    DeleteAction::make(),
-                ]),
+                Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
