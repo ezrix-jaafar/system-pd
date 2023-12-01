@@ -65,4 +65,9 @@ class User extends Authenticatable
         return $this->hasMany(DesktopOwner::class);
     }
 
+    public function DailyWorkingReportSale(): hasMany
+    {
+        return $this->hasMany(DailyWorkingReportSale::class);
+    }
+
 }

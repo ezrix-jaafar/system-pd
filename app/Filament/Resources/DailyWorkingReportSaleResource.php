@@ -17,7 +17,8 @@ class DailyWorkingReportSaleResource extends Resource
 {
     protected static ?string $model = DailyWorkingReportSale::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Daily Report';
+    protected static ?string $label = 'Daily Report Team Sale';
 
     public static function form(Form $form): Form
     {
@@ -28,8 +29,8 @@ class DailyWorkingReportSaleResource extends Resource
                         Forms\Components\Section::make('Working Report')
                             ->schema([
                                 Forms\Components\TextInput::make('user_id')
-                                    ->default(auth()->user()->name)
-                                    ->disabled(),
+                                    ->default(auth()->id())
+                                    ->readOnly(),
                                 Forms\Components\DatePicker::make('report_date')
                                     ->required(),
                                 Forms\Components\Textarea::make('Notes')
@@ -42,9 +43,10 @@ class DailyWorkingReportSaleResource extends Resource
                         Forms\Components\Section::make('Progress Report')
                             ->schema([
                                 Forms\Components\Repeater::make('report_details')
+                                    ->collapsible()
+                                    ->hiddenLabel()
                                     ->schema([
-                                        Forms\Components\TextInput::make('client_name')
-                                        ->columnSpan('full'),
+                                        Forms\Components\TextInput::make('client_name'),
                                         Forms\Components\Select::make('progress')
                                             ->searchable()
                                             ->options([
@@ -70,11 +72,12 @@ class DailyWorkingReportSaleResource extends Resource
                                         ]),
                                         Forms\Components\Textarea::make('client_note')
                                             ->columnSpan('full')
-                                            ->rows('3'),
-                                    ])->columns('2')
+                                            ->rows('1')
+                                            ->autosize(),
+                                    ])->addActionLabel('Add more client') ->columns('3')
                             ])
                     ])
-            ]);
+            ])->columns('full');
     }
 
     public static function table(Table $table): Table
