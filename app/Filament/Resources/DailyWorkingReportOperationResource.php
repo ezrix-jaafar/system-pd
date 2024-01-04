@@ -86,7 +86,7 @@ class DailyWorkingReportOperationResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('report_details_count')
-                    ->label('Total Client Contacted')
+                    ->label('Total Projects')
                     ->sortable()
                     ->searchable(),
             ])
@@ -94,7 +94,7 @@ class DailyWorkingReportOperationResource extends Resource
                 //
             ])
             ->actions([
-                ctionGroup::make([
+                \Filament\Tables\Actions\ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make(),
